@@ -46,9 +46,7 @@ var diretoryTreeToObj = function(dir, done) {
 
 
 function copyFile(src, dest) {
-    
       let readStream = fs.createReadStream(src);
-    
       readStream.once('error', (err) => {
         console.log(err);
       });
@@ -57,14 +55,10 @@ function copyFile(src, dest) {
         deleteFile(src);
         console.log('done copying');
       });
-      
-
       readStream.pipe(fs.createWriteStream(dest));
 }
 
-
 function deleteFile(path) {
-    
     fs.unlink(path, (err) => {
         if (err) {
             console.log(path + "failed to delete local image:" + err);
@@ -72,16 +66,13 @@ function deleteFile(path) {
             console.log('successfully deleted local image');                                
         }
     });
-
 }
-
 
 //Routes
 router.get(/scenarios/,function(req,res){
     diretoryTreeToObj(req.query.root, function(err, result){
         if(err)
             console.error(err);
-
         res.send(JSON.stringify(result));
     });
 });
@@ -90,12 +81,11 @@ router.post('/file',function(req,res){
     if(req.body.accepted){
         var actFilePath = req.body.actfilepath;
         var baseFilePath = req.body.basefilepath;
-
-        // deleteFile(baseFilePath);
-        
         copyFile(actFilePath, baseFilePath);
+        res.send('file accepted');
+    }else{
+        res.send('file not accepted');
     }
-    res.send('in file');
 });
 
 module.exports = router;
