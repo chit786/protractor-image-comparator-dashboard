@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>
+        <ion-row>
+          <ion-col col-8>
+              <ion-item>
+                  <ion-label fixed>Root Folder</ion-label>
+                  <ion-input type="text" [(ngModel)]="rootPath"></ion-input>
+                 
+                </ion-item>
+          </ion-col>
+          <ion-col col-1>
+              <button ion-button (click)='addRootPath()'>Load</button>
+            </ion-col>
+       
+         
+        </ion-row>
+        <ion-row radio-group [(ngModel)]="imageType" (ionChange)='selectImageType($event)'>
+          
+              <ion-col>
+                <ion-item>
+                <ion-label>Baseline</ion-label>
+                <ion-radio value="baseline"></ion-radio>
+                </ion-item>
+              </ion-col>
+            
+              <ion-col>
+                  <ion-item>
+                <ion-label>Actual</ion-label>
+                <ion-radio value="actual"></ion-radio>
+                  </ion-item>
+              </ion-col>
+            
+              <ion-col>
+                  <ion-item>
+                <ion-label>Difference</ion-label>
+                <ion-radio value="diff"></ion-radio>
+                  </ion-item>
+              </ion-col>
+          
+            </ion-row>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding style='text-align:center;'>
+  <div *ngIf='imgSrc'>
+      <img [src]="imgSrc">
+  </div>
+  <div *ngIf='!imgSrc'>
+    <ion-label>No Image to show, please provide correct root path above and select an image from left tree</ion-label>
+  </div>
+  <ion-fab top right *ngIf='imageType=="diff"'>
+      <button ion-fab>?</button>
+      <ion-fab-list side="left">
+        <button ion-fab>BUG</button>
+        <button ion-fab outline icon-only (click)='acceptDifference()'>
+            <ion-icon name="checkmark"></ion-icon>
+          </button>
+      </ion-fab-list>
+    </ion-fab>
+</ion-content>
+
+<ion-footer>
+    
+</ion-footer>
