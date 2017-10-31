@@ -71,9 +71,14 @@ function deleteFile(path) {
 //Routes
 router.get(/scenarios/,function(req,res){
     diretoryTreeToObj(req.query.root, function(err, result){
-        if(err)
+        if(err){
             console.error(err);
-        res.send(JSON.stringify(result));
+            res.send({error:'error'});
+        }else{
+            res.send(JSON.stringify(result));
+        }
+           
+       
     });
 });
 
@@ -86,6 +91,21 @@ router.post('/file',function(req,res){
     }else{
         res.send('file not accepted');
     }
+});
+
+
+router.get('/file',function(req,res){
+    console.log(req.query.path);
+    if(req.query.path){
+        var img = fs.readFileSync(req.query.path);
+        var base64img = new Buffer(img, 'base64');
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': base64img.length
+          });
+          res.end(base64img); 
+    }
+   
 });
 
 module.exports = router;

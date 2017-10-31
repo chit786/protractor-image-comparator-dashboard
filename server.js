@@ -10,4 +10,4 @@ app.use('/api',require('./routes/api'));
 
 app.listen(3000);
 
-console.log("api running on 7000");
+console.log("api running on 3000");
